@@ -3,12 +3,12 @@
 </template>
 
 <script setup lang="ts">
-import { projectsQuery, type Project } from '@/utils/supaQueries'
+import { projectsQuery, type Projects } from '@/utils/supaQueries'
 import { columns } from '@/utils/tableColumns/projectsColumnns'
 
 usePageStore().pageData.title = 'Projects'
 
-const projects = ref<Project | null>(null)
+const projects = ref<Projects | null>(null)
 
 const getTasks = async () => {
   const { data, error } = await projectsQuery
