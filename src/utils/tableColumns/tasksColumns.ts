@@ -1,9 +1,9 @@
 import { mountTableHeader, mountTableSimpleCell } from "@/lib/helpers/dataTableFunctions"
 import type { ColumnDef } from "@tanstack/vue-table"
 import { RouterLink } from "vue-router"
-import type { TaskWithProject } from "../supaQueries"
+import type { TasksWithProject } from "../supaQueries"
 
-export const columns: ColumnDef<TaskWithProject[0]>[] = [
+export const columns: ColumnDef<TasksWithProject[0]>[] = [
   {
     accessorKey: 'name',
     header: () => mountTableHeader('Name'),
