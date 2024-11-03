@@ -4,14 +4,15 @@
 
 <script setup lang="ts">
 import { supabase } from '@/lib/supabaseClient'
-import { ref } from 'vue'
+import { h, ref } from 'vue'
 import type { Tables } from 'database/types'
 import DataTable from '@/components/ui/data-table/DataTable.vue'
 import type { ColumnDef } from '@tanstack/vue-table'
 import {
-  mountTableCell,
+  mountTableSimpleCell,
   mountTableHeader,
 } from '@/lib/helpers/dataTableFunctions'
+import { RouterLink } from 'vue-router'
 
 const projects = ref<Tables<'projects'>[] | null>(null)
 
@@ -27,21 +28,28 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
     accessorKey: 'name',
     header: () => mountTableHeader('Name'),
     cell: ({ row }) => {
-      return mountTableCell(row.getValue('name'))
+      return h(
+        RouterLink,
+        {
+          to: `/projects/${row.original.slug}`,
+          class: 'text-left font-medium hover:bg-muted block w-full',
+        },
+        () => row.getValue('name'),
+      )
     },
   },
   {
     accessorKey: 'status',
     header: () => mountTableHeader('Status'),
     cell: ({ row }) => {
-      return mountTableCell(row.getValue('status'))
+      return mountTableSimpleCell(row.getValue('status'))
     },
   },
   {
     accessorKey: 'collaborators',
     header: () => mountTableHeader('Collaborators'),
     cell: ({ row }) => {
-      return mountTableCell(JSON.stringify(row.getValue('collaborators')))
+      return mountTableSimpleCell(JSON.stringify(row.getValue('collaborators')))
     },
   },
 ]

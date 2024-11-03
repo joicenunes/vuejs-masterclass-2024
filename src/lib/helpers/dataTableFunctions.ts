@@ -1,14 +1,14 @@
 import { h } from "vue"
 
 const mountTableHeader = (headerName: string) => {
-  return h('div', { class: 'text-left;' }, headerName)
+  return h('div', { class: 'text-left' }, headerName)
 }
 
-const mountTableCell = (value: string) => {
-  return h('div', { class: 'text-left;' }, value)
+const mountTableSimpleCell = (value: string) => {
+  return h('div', { class: 'text-left font-medium' }, value)
 }
 
 export {
   mountTableHeader,
-  mountTableCell
+  mountTableSimpleCell
 }

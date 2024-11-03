@@ -4,14 +4,15 @@
 
 <script setup lang="ts">
 import { supabase } from '@/lib/supabaseClient'
-import { ref } from 'vue'
+import { h, ref } from 'vue'
 import type { Tables } from 'database/types'
 import type { ColumnDef } from '@tanstack/vue-table'
 import DataTable from '@/components/ui/data-table/DataTable.vue'
 import {
-  mountTableCell,
+  mountTableSimpleCell,
   mountTableHeader,
 } from '@/lib/helpers/dataTableFunctions'
+import { RouterLink } from 'vue-router'
 
 const tasks = ref<Tables<'tasks'>[] | null>(null)
 
@@ -27,35 +28,42 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
     accessorKey: 'name',
     header: () => mountTableHeader('Name'),
     cell: ({ row }) => {
-      return mountTableCell(row.getValue('name'))
+      return h(
+        RouterLink,
+        {
+          to: `/tasks/${row.original.id}`,
+          class: 'text-left font-medium hover:bg-muted block w-full',
+        },
+        () => row.getValue('name'),
+      )
     },
   },
   {
     accessorKey: 'status',
     header: () => mountTableHeader('Status'),
     cell: ({ row }) => {
-      return mountTableCell(row.getValue('status'))
+      return mountTableSimpleCell(row.getValue('status'))
     },
   },
   {
     accessorKey: 'due_date',
     header: () => mountTableHeader('Due Date'),
     cell: ({ row }) => {
-      return mountTableCell(row.getValue('due_date'))
+      return mountTableSimpleCell(row.getValue('due_date'))
     },
   },
   {
     accessorKey: 'project_id',
     header: () => mountTableHeader('Project'),
     cell: ({ row }) => {
-      return mountTableCell(row.getValue('project_id'))
+      return mountTableSimpleCell(row.getValue('project_id'))
     },
   },
   {
     accessorKey: 'collaborators',
     header: () => mountTableHeader('Collaborators'),
     cell: ({ row }) => {
-      return mountTableCell(JSON.stringify(row.getValue('collaborators')))
+      return mountTableSimpleCell(JSON.stringify(row.getValue('collaborators')))
     },
   },
 ]
