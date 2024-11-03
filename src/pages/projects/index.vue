@@ -3,21 +3,20 @@
 </template>
 
 <script setup lang="ts">
-import { supabase } from '@/lib/supabaseClient'
-import type { Tables } from 'database/types'
 import type { ColumnDef } from '@tanstack/vue-table'
 import {
   mountTableSimpleCell,
   mountTableHeader,
 } from '@/lib/helpers/dataTableFunctions'
 import { RouterLink } from 'vue-router'
+import { projectsQuery, type Project } from '@/utils/supaQueries'
 
 usePageStore().pageData.title = 'Projects'
 
-const projects = ref<Tables<'projects'>[] | null>(null)
+const projects = ref<Project | null>(null)
 
 const getTasks = async () => {
-  const { data, error } = await supabase.from('projects').select()
+  const { data, error } = await projectsQuery
 
   if (error) console.log(error)
   projects.value = data
@@ -25,7 +24,7 @@ const getTasks = async () => {
 
 await getTasks()
 
-const columns: ColumnDef<Tables<'projects'>>[] = [
+const columns: ColumnDef<Project[0]>[] = [
   {
     accessorKey: 'name',
     header: () => mountTableHeader('Name'),
