@@ -6,8 +6,6 @@
 </template>
 
 <script lang="ts">
-import { useRoute } from 'vue-router'
-
 const route = useRoute()
 </script>
 <style lang=""></style>
