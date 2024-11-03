@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 import VueRouter from 'unplugin-vue-router/vite'
 import AutoImport from 'unplugin-auto-import/vite'
+import { VueRouterAutoImports } from 'unplugin-vue-router'
 
 import tailwind from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
@@ -20,7 +21,7 @@ export default defineConfig({
       ],
       imports: [
         'vue',
-        'vue-router'
+        VueRouterAutoImports
       ],
       dts: true,
       viteOptimizeDeps: true
