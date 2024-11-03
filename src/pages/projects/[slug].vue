@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 const route = useRoute()
 </script>
 <style lang=""></style>
