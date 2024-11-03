@@ -12,7 +12,7 @@ import {
 } from '@/lib/helpers/dataTableFunctions'
 import { RouterLink } from 'vue-router'
 
-usePageStore().pageData.title = 'Tasks'
+usePageStore().pageData.title = 'Projects'
 
 const projects = ref<Tables<'projects'>[] | null>(null)
 
