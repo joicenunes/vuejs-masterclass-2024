@@ -12,6 +12,8 @@ import {
 } from '@/lib/helpers/dataTableFunctions'
 import { RouterLink } from 'vue-router'
 
+usePageStore().pageData.title = 'Projects'
+
 const tasks = ref<Tables<'tasks'>[] | null>(null)
 
 const getProjects = async () => {

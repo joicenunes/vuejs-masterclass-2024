@@ -5,5 +5,6 @@
   </div>
 </template>
 
-<script lang="ts"></script>
-<style lang=""></style>
+<script lang="ts" setup>
+usePageStore().pageData.title = 'Homepage'
+</script>
