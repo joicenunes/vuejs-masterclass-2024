@@ -5,7 +5,6 @@
 <script setup lang="ts">
 import { supabase } from '@/lib/supabaseClient'
 import type { Tables } from 'database/types'
-import DataTable from '@/components/ui/data-table/DataTable.vue'
 import type { ColumnDef } from '@tanstack/vue-table'
 import {
   mountTableSimpleCell,
