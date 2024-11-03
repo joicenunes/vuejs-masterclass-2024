@@ -11,16 +11,20 @@ import {
   mountTableHeader,
 } from '@/lib/helpers/dataTableFunctions'
 import { RouterLink } from 'vue-router'
+import type { QueryData } from '@supabase/supabase-js'
 
 usePageStore().pageData.title = 'Tasks'
 
-const tasks = ref<Tables<'tasks'>[] | null>(null)
-
-const getProjects = async () => {
-  const { data, error } = await supabase.from('tasks').select(`
+const taskWithProjectQuery = supabase.from('tasks').select(`
     *,
     projects (id, name, slug)
   `)
+
+type TaskWithProject = QueryData<typeof taskWithProjectQuery>
+const tasks = ref<TaskWithProject | null>(null)
+
+const getProjects = async () => {
+  const { data, error } = await taskWithProjectQuery
 
   if (error) console.log(error)
   tasks.value = data
@@ -28,7 +32,7 @@ const getProjects = async () => {
 
 await getProjects()
 
-const columns: ColumnDef<Tables<'tasks'>>[] = [
+const columns: ColumnDef<TaskWithProject[0]>[] = [
   {
     accessorKey: 'name',
     header: () => mountTableHeader('Name'),
@@ -61,14 +65,16 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
     accessorKey: 'projects',
     header: () => mountTableHeader('Project'),
     cell: ({ row }) => {
-      return h(
-        RouterLink,
-        {
-          to: `/projects/${row.original.projects.slug}`,
-          class: 'text-left font-medium hover:bg-muted block w-full',
-        },
-        () => row.getValue('projects').name,
-      )
+      return row.original.projects
+        ? h(
+            RouterLink,
+            {
+              to: `/projects/${row.original.projects.slug}`,
+              class: 'text-left font-medium hover:bg-muted block w-full',
+            },
+            () => row.original.projects?.name,
+          )
+        : ''
     },
   },
   {
